@@ -242,6 +242,14 @@ add_record() {
 }
 
 arDdnsInfo() {
+	# 检查openssl是否可用
+	openssltest=`which openssl`
+	if [ -z "$openssltest" ] || [ ! -s "`which openssl`" ] ; then
+		logger -t "【AliDDNS动态域名】" "错误！缺少openssl命令，无法进行HMAC-SHA1签名"
+		logger -t "【AliDDNS动态域名】" "请在固件配置中启用CONFIG_FIRMWARE_INCLUDE_OPENSSL_EXE=y"
+		return 1
+	fi
+
 case  $name  in
 	  \*)
 		name1=%2A
@@ -337,6 +345,14 @@ fi
 # 更新记录信息
 # 参数: 主域名 子域名
 arDdnsUpdate() {
+	# 检查openssl是否可用
+	openssltest=`which openssl`
+	if [ -z "$openssltest" ] || [ ! -s "`which openssl`" ] ; then
+		logger -t "【AliDDNS动态域名】" "错误！缺少openssl命令，无法进行HMAC-SHA1签名"
+		logger -t "【AliDDNS动态域名】" "请在固件配置中启用CONFIG_FIRMWARE_INCLUDE_OPENSSL_EXE=y"
+		return 1
+	fi
+
 case  $name  in
 	  \*)
 		name1=%2A
